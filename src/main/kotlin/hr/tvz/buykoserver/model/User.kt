@@ -1,5 +1,6 @@
 package hr.tvz.buykoserver.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
 //TODO: add 2 methods
@@ -32,8 +33,9 @@ class User(
     @Column(name = "balance_eur", nullable = false)
     var balanceEur: Double = 0.0,
 
-    @OneToMany(cascade = [CascadeType.ALL], )
-    @JoinTable(name = "post_user",
+    @JsonIgnore
+    @OneToMany(cascade = [CascadeType.ALL])
+    @JoinTable(name = "posts_users",
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")]
     )
@@ -41,8 +43,6 @@ class User(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int = 0
+    var id: Long = 0
 
-
-) {
-}
+)

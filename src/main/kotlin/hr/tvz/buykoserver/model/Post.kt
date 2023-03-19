@@ -1,7 +1,5 @@
 package hr.tvz.buykoserver.model
 
-import java.math.BigDecimal
-import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -9,19 +7,19 @@ import javax.persistence.*
 class Post (
 
     @Column (name = "title", nullable = false)
-    val title: String,
+    var title: String = "",
 
     @Column (name = "description", nullable = false)
-    val description: String,
+    var description: String = "",
 
     @Column (name = "price", nullable = false)
-    val price: Double,
+    var price: Double = 0.0,
 
     @Column (name = "category", nullable = false)
-    val category: String,
+    var category: String = "",
 
     @OneToOne(cascade = [CascadeType.ALL])
-    @JoinTable(name = "post_user",
+    @JoinTable(name = "posts_users",
         joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")]
     )
@@ -29,6 +27,6 @@ class Post (
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int
+    val id: Long
 
 )
