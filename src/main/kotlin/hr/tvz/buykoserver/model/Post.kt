@@ -18,7 +18,7 @@ class Post (
     @Column (name = "category", nullable = false)
     var category: String = "",
 
-    @OneToOne(cascade = [CascadeType.ALL])
+    @OneToOne(cascade = [CascadeType.DETACH])
     @JoinTable(name = "posts_users",
         joinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")]

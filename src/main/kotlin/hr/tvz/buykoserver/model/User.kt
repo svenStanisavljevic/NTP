@@ -3,8 +3,6 @@ package hr.tvz.buykoserver.model
 import com.fasterxml.jackson.annotation.JsonIgnore
 import javax.persistence.*
 
-//TODO: add 2 methods
-
 @Entity
 @Table(name = "users")
 class User(
@@ -33,16 +31,30 @@ class User(
     @Column(name = "balance_eur", nullable = false)
     var balanceEur: Double = 0.0,
 
+    @Column(name = "role", nullable = false)
+    var role: Int = 1,
+
+    @JsonIgnore
+    @Column(name = "creation_ts", nullable = false)
+    var creationTS: String = "",
+
     @JsonIgnore
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinTable(name = "posts_users",
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
-        inverseJoinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")]
+        inverseJoinColumns = [JoinColumn(name = "post_id", referencedColumnName = "id")],
     )
     var posts: MutableList<Post> = mutableListOf(),
 
+    @OneToOne(cascade = [CascadeType.ALL])
+    @JoinTable(name = "users_locations",
+        joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "location_id", referencedColumnName = "id")]
+    )
+    var location: Location?,
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = 0
+    var id: Long
 
 )

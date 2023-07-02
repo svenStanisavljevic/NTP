@@ -2,6 +2,7 @@ package hr.tvz.buykoserver.service
 
 import hr.tvz.buykoserver.model.User
 import hr.tvz.buykoserver.repositories.UserRepositroy
+import hr.tvz.buykoserver.security.PasswordUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -20,6 +21,10 @@ class UserService {
         return userRepositroy.findByIdOrNull(id)
     }
 
+    fun getUserByUsername(username:String): User {
+        return userRepositroy.findUserByUsername(username)
+    }
+
     fun deleteUserById(id: Long) {
         userRepositroy.deleteById(id)
     }
@@ -29,16 +34,18 @@ class UserService {
     }
 
     fun updateUser(id: Long, user: User) {
-        var foundUser = userRepositroy.findByIdOrNull(id)
+        val foundUser = userRepositroy.findByIdOrNull(id)
         if (foundUser != null) {
+            foundUser.username = user.username
             foundUser.firstName = user.firstName
             foundUser.lastName = user.lastName
             foundUser.email = user.email
-            foundUser.profilePicture = user.profilePicture
             foundUser.password = user.password
             foundUser.phoneNumber = user.phoneNumber
+            foundUser.location = user.location
             userRepositroy.save(foundUser)
         }
+
     }
 
 }

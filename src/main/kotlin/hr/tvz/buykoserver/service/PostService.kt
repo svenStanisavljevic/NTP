@@ -1,5 +1,7 @@
 package hr.tvz.buykoserver.service
 
+import hr.tvz.buykoserver.hibernate.Import.SQLQuerry
+import hr.tvz.buykoserver.hibernate.Import
 import hr.tvz.buykoserver.model.Post
 import hr.tvz.buykoserver.repositories.PostRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +14,7 @@ class PostService {
     @Autowired
     lateinit var postRepository: PostRepository
 
+    @SQLQuerry("")
     fun getAllPosts(): List<Post> {
         return postRepository.findAll()
     }
